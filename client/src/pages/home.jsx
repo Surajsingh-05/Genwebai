@@ -1,5 +1,6 @@
-import react from 'react'
+import react, { useState } from 'react'
 import {motion} from "motion/react"
+import LoginModal from '../components/loginmodel.jsx'
 
 
 function Home (){
@@ -9,6 +10,9 @@ function Home (){
         "Fully Responsive Layouts",
         "Production Ready Output",
     ]
+
+    const [openLogin, setOpenLogin]=useState(false)
+
     return(
         <div className='relative min-h-screen bg-[#040404] text-white overflow-hidden'>
             <motion.div 
@@ -26,7 +30,9 @@ function Home (){
                         <div className='hidden md:inline text-sm text-zinc-400 hover:text-white cursor-pointer'>
                             pricing
                         </div>   
-                        <button className='px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm'>
+                        <button className='px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm'
+                        onClick={()=>setOpenLogin(true)}
+                        >
                             Get Started
                         </button>
 
@@ -80,6 +86,9 @@ function Home (){
             <footer className='border-t border-white/10 py-20 text-center text-sm text-zinc-500'>
                 &copy; {new Date().getFullYear()} GenWeb.ai
             </footer>
+
+            {openLogin && <LoginModal open={openLogin} onClose={() => setOpenLogin(false)}/>}
+          
         </div>
     )
 }
