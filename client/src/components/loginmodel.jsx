@@ -1,13 +1,21 @@
 import react from 'react'
 import { AnimatePresence, delay, motion } from 'motion/react'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../firebase'
+import axios from 'axios'
 
 function LoginModal({open, onClose}){
 
-    const handleGoogleAuth = async => () {
+    const handleGoogleAuth = async ()=>  {
         try {
-            const 
+            const result = await signInWithPopup(auth, provider)
+            const {data} = await axios.post('$(serverUrl)/api/auth/google', {name:result.user.displayName,
+                email:result.user.email,
+                avatar:result.user.photoURL
+            },{withCredentials:true})
+            console.log(data)
         } catch (error) {
-            
+            console.log(error)
         }
     }
     return(
@@ -33,7 +41,7 @@ function LoginModal({open, onClose}){
         transition={{ duration:6, repeat: Infinity}}
         className='absolute -top-32 -left-32 w-80 h-80 bg-purple-500/30 blur-[140px]'
         />
-        <motion.di
+        <motion.div
         animate={{ opacity:[0.2, 0.35, 0.2]}}
         transition={{duration:6, repeat:Infinity, delay:2}}
         className="absolute -bottom-32 -right-32 w-80 h-80 bg-blue-500/25 blur-[140px]"
@@ -53,6 +61,7 @@ function LoginModal({open, onClose}){
             <motion.button
             whileHover={{scale:1.04}}
             whileTap={{scale:0.96}}
+            onClick={handleGoogleAuth}
             className='group relative w-full h-13 rounded-2xl bg-white text-black font-semibold shadow-xl overflow-hidden'
             >
                 <div className='relative flex items-center justify-center gap-3'>
