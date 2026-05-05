@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Home from './pages/home'
-export const serverUrl= "http://localhoost:8000"
+import useGetCurrentUser from './hooks/useGetCurrent'
+export const serverUrl= "http://localhost:3000"
 
 
 
 function App() { 
-
+  useGetCurrentUser()
   return (
     <BrowserRouter>
     <Routes>

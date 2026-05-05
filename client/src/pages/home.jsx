@@ -1,6 +1,7 @@
 import react, { useState } from 'react'
 import {motion} from "motion/react"
 import LoginModal from '../components/loginmodel.jsx'
+import { useSelector } from 'react-redux'
 
 
 function Home (){
@@ -12,6 +13,7 @@ function Home (){
     ]
 
     const [openLogin, setOpenLogin]=useState(false)
+    const{userData}=useSelector(state=>state.user)
 
     return(
         <div className='relative min-h-screen bg-[#040404] text-white overflow-hidden'>
@@ -29,12 +31,13 @@ function Home (){
                     <div className='flex items-center gap-5'>
                         <div className='hidden md:inline text-sm text-zinc-400 hover:text-white cursor-pointer'>
                             pricing
-                        </div>   
+                        </div>  
+                        {!userData ?
                         <button className='px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm'
                         onClick={()=>setOpenLogin(true)}
                         >
                             Get Started
-                        </button>
+                        </button>:<button className='flex-items-center'> <img src={userData.avatar} alt="" className='w-9 h-9 rounded-full border border-white/20 object-cover' /></button>} 
 
                     </div>
 

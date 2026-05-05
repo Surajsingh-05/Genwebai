@@ -21,12 +21,13 @@ export const googleAuth = async (req,res)=>{
                 httpOnly:true,
                 secure:false,
                 samesite:"strict",
-                maxAge:2*24*60*60*1000
+                maxAge:7*24*60*60*1000
             })
 
             return res.status(200).json(user)
             
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message: error.message})
     }
 }
